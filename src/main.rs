@@ -1,4 +1,10 @@
+use kata_fizzbuzz_rs::replace_number;
+
 fn main() {
+    let res = replace_number(2);
+    println!("Result: {}", res);
+
+
     let suite = vec![1, 2, 3];
 
     let converted = suite
