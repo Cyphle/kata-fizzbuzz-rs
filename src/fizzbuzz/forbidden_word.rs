@@ -1,5 +1,8 @@
 pub fn replace_number(number: u8) -> String {
-    let forbidden = vec![3, 5];
+    let forbidden: Vec<(u8, String)> = vec![
+        (3, "Fizz".to_string()),
+        (5, "Buzz".to_string())
+    ];
 
     if is_dividable_by(number, 3) {
         "Fizz".to_string()
@@ -37,6 +40,28 @@ mod replace_number_tests {
         fn should_replace_number_by_fizz_when_dividable_by_three() {
             let result = replace_number(6);
             assert_eq!(result, "Fizz");
+        }
+    }
+
+    mod buzz {
+        use crate::replace_number;
+
+        #[test]
+        fn should_replace_number_by_buzz_when_five() {
+            let result = replace_number(5);
+            assert_eq!(result, "Buzz");
+        }
+
+        #[test]
+        fn should_not_replace_by_buzz_when_not_five() {
+            let result = replace_number(2);
+            assert_eq!(result, "2");
+        }
+
+        #[test]
+        fn should_replace_number_by_buzz_when_dividable_by_five() {
+            let result = replace_number(10);
+            assert_eq!(result, "Buzz");
         }
     }
 
