@@ -1,19 +1,23 @@
 pub fn replace_number(number: u8) -> String {
     let forbidden: Vec<(u8, String)> = vec![
         (3, "Fizz".to_string()),
-        (5, "Buzz".to_string())
+        (5, "Buzz".to_string()),
     ];
 
-    if is_dividable_by(number, 3) {
-        "Fizz".to_string()
-    } else if is_dividable_by(number, 5) {
-        "Buzz".to_string()
-    } else {
-        format!("{}", number)
-    }
+    forbidden
+        .iter()
+        .map(|(divisor, replacor)|
+            if is_dividable_by(number, divisor) {
+                replacor.clone()
+            } else {
+                number.clone().to_string()
+            }
+        )
+        .collect::<Vec<String>>()
+        .join("")
 }
 
-pub fn is_dividable_by(to_test: u8, divisor: u8) -> bool {
+pub fn is_dividable_by(to_test: u8, divisor: &u8) -> bool {
     to_test % divisor == 0
 }
 
@@ -65,24 +69,34 @@ mod replace_number_tests {
         }
     }
 
+    mod fizz_buzz {
+        use crate::replace_number;
+
+        #[test]
+        fn should_replace_number_by_fizzbuzz_when_dividable_by_three_and_five() {
+            let result = replace_number(15);
+            assert_eq!(result, "FizzBuzz");
+        }
+    }
+
     mod dividable_by_three {
         use crate::fizzbuzz::forbidden_word::is_dividable_by;
 
         #[test]
         fn should_return_true_when_three() {
-            let res = is_dividable_by(3, 3);
+            let res = is_dividable_by(3, &3);
             assert_eq!(res, true)
         }
 
         #[test]
         fn should_return_true_when_six() {
-            let res = is_dividable_by(6, 3);
+            let res = is_dividable_by(6, &3);
             assert_eq!(res, true)
         }
 
         #[test]
         fn should_return_false_when_not_dividable_by_three() {
-            let res = is_dividable_by(5, 3);
+            let res = is_dividable_by(5, &3);
             assert_eq!(res, false);
         }
     }
