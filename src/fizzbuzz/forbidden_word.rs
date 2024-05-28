@@ -1,20 +1,26 @@
+use std::ops::Add;
+
 pub fn replace_number(number: u8) -> String {
     let forbidden: Vec<(u8, String)> = vec![
         (3, "Fizz".to_string()),
         (5, "Buzz".to_string()),
     ];
 
-    forbidden
+    let replaced = forbidden
         .iter()
-        .map(|(divisor, replacor)|
-            if is_dividable_by(number, divisor) {
-                replacor.clone()
-            } else {
-                number.clone().to_string()
-            }
-        )
-        .collect::<Vec<String>>()
-        .join("")
+        .fold(
+            String::new(),
+            |acc, (divisor, replacor)|
+                match is_dividable_by(number, divisor) {
+                    true => acc.add(replacor),
+                    false => acc
+                }
+        );
+
+    match replaced.len() {
+        0 => number.to_string(),
+        _ => replaced
+    }
 }
 
 pub fn is_dividable_by(to_test: u8, divisor: &u8) -> bool {
