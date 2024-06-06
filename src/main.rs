@@ -1,23 +1,10 @@
-use kata_fizzbuzz_rs::replace_number;
+use kata_fizzbuzz_rs::{fizzbuzz, replace_number};
 
 fn main() {
-    let res = replace_number(2);
-    println!("Result: {}", res);
+    let suite = (0..=15).collect();
+    let result = fizzbuzz(&suite);
 
-
-    let suite = vec![1, 2, 3];
-
-    let converted = suite
-        .iter()
-        .map(|x|
-            if *x == 1 {
-                "Fizz"
-            } else {
-                "None"
-            }
-        )
-        .collect::<Vec<&str>>()
-        .join("\n");
-
-    println!("Hello, world! {}", converted);
+    println!("Rust FizzBuzz");
+    println!("Example: {:?}", suite);
+    println!("Result {:?}", result);
 }
